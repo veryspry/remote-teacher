@@ -3,12 +3,40 @@
   <head>
     <meta charset='utf-8'>
     <meta name='viewport' content='width=device-width initial-scale=1.0'>
-    <title>Boilermaker</title>
+    <title>Remote Lesson</title>
     <link rel="stylesheet" href="/style.css" />
     <script defer src="/bundle.js"></script>
+    <!-- <script defer src="/rtc-video-conf.js"></script> -->
+    <!-- <script defer src="../node_modules/rtc-quickconnect/index.js"></script> -->
+    <!-- <script defer src="rtc-text-chat.js"></script> -->
+    <!-- <script type="text/javascript" src="http://cdn.icecomm.io/icecomm.js"></script> -->
+
+    <!-- AN ADAPTOR SHIM FOR WEBRTC CONNECTION -->
+    <script defer src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <script defer src="/videoChat.js"></script>
   </head>
   <body>
-    <div id="app"></div>
+    <div id="app">
+      <!-- <div class="local"></div> -->
+      <!-- <div class="remote"></div> -->
+    </div>
+    <!-- <video autoplay playsinline></video> -->
+
+    <textarea id="dataChannelSend" disabled placeholder="Press Start, enter some text, then press Send."></textarea>
+    <textarea id="dataChannelReceive" disabled></textarea>
+
+    <video id="localVideo" autoplay playsinline></video>
+    <video id="remoteVideo" autoplay playsinline></video>
+
+
+    <div>
+      <button id="startButton">Start</button>
+      <button id="callButton">Call</button>
+      <button id="hangupButton">Hang Up</button>
+    </div>
+
+
+
+
   </body>
 </html>
-

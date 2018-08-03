@@ -19,3 +19,25 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+.local {
+  position: absolute;  right: 10px;
+}
+
+.local video {
+  max-width: 200px;
+}
+
+#localVideo {
+  /* position: absolute; */
+  /* right: 20px; */
+  /* bottom: 20px; */
+  /* width: 200px; */
+}
+
+video:nth-of-type(2) {
+  position: fixed; right: 0; bottom: 0;
+  min-width: 100%; min-height: 100%;
+  width: auto; height: auto; z-index: -100;
+  background-size: cover;
+}
