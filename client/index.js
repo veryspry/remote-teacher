@@ -7,7 +7,9 @@ import store from './store'
 import App from './app'
 
 // establishes socket connection
-import './socket'
+import './socket/'
+import exportWebRTC from './webRTC'
+exportWebRTC() // execute WebRTC file
 
 ReactDOM.render(
   <Provider store={store}>
