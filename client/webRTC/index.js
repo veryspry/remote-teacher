@@ -230,6 +230,17 @@ const exportWebRTC = () => {
 
       const servers = null  // Allows for RTC server configuration.
 
+      //Create an account on Viagenie (http://numb.viagenie.ca/),
+      //and replace {'urls': 'turn:numb.viagenie.ca','credential': 'websitebeaver','username': 'websitebeaver@email.com'}
+      //with the information from your account
+      const serversToAdd = { // add appropriate TURN and STUN servers here
+        'iceServers': [
+          { 'urls': 'stun:stun.services.mozilla.com' },
+          { 'urls': 'stun:stun.l.google.com:19302' },
+          {'urls': 'turn:numb.viagenie.ca','credential': 'beaver','username': 'webrtc.websitebeaver@gmail.com'}
+        ]
+      }
+
       // Create peer connections and add behavior.
       localPeerConnection = new RTCPeerConnection(servers)
       trace('Created local peer connection object localPeerConnection.')
