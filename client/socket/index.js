@@ -8,36 +8,44 @@ socket.on('connect', () => {
   console.log('Connected!')
 })
 
+// Function to fire when you want a user to join
+export const joinRoom = roomName => {
 
-let isInitiator
+  let isInitiator
 
-// create or ask to join a room
-// window.room = prompt("Enter room name:")
-window.room = 'coolroom'
+  // create or ask to join a room
+  // window.room = prompt("Enter room name:")
+  window.room = roomName
 
-if (room !== "") {
-  console.log('Message from client: Asking to join room ' + room)
-  socket.emit('create or join', room)
+  if (room !== "") {
+    console.log('Message from client: Asking to join room ' + room)
+    socket.emit('create or join', room)
+  }
+
+  socket.on('created', function(room, clientId) {
+    isInitiator = true
+  })
+
+  socket.on('full', function(room) {
+    console.log('Message from client: Room ' + room + ' is full :^(')
+  })
+
+  socket.on('ipaddr', function(ipaddr) {
+    console.log('Message from client: Server IP address is ' + ipaddr)
+  })
+
+  socket.on('joined', function(room, clientId) {
+    isInitiator = false
+  })
+
+  socket.on('log', function(array) {
+    console.log.apply(console, array)
+  })
+
 }
 
-socket.on('created', function(room, clientId) {
-  isInitiator = true
-})
 
-socket.on('full', function(room) {
-  console.log('Message from client: Room ' + room + ' is full :^(')
-})
 
-socket.on('ipaddr', function(ipaddr) {
-  console.log('Message from client: Server IP address is ' + ipaddr)
-})
 
-socket.on('joined', function(room, clientId) {
-  isInitiator = false
-})
-
-socket.on('log', function(array) {
-  console.log.apply(console, array)
-})
 
 export default socket
