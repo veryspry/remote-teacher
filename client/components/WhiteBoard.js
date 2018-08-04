@@ -1,20 +1,135 @@
 import React from 'react'
 import {connect} from 'react-redux'
-// import whiteboard, {draw} from '../whiteboard'
+import whiteboard, {draw} from '../socket/whiteboard'
 
 class WhiteBoard extends React.Component {
-
-
-  componentDidMount = () => {
-    draw([0, 0], [250, 250], 'red', true)
+  state = {
+    colors: [
+      'black',
+      'purple',
+      'blue',
+      'red',
+      'green',
+      'orange',
+      'yellow',
+    ],
+    selectedColor: 'black',
+    currentMousePosition: {
+      x: 0,
+      y: 0,
+    },
+    lastMousePosition: {
+      x: 0,
+      y: 0,
+    },
   }
 
+  color
+
+  componentDidMount = () => {
+    // const canvas = document.getElementByClassName('whiteBoard')
+    // const ctx = canvas.getContext('2d')
+    // const canvas = this._canvas
+    const canvas = this._canvas
+    const ctx = canvas.getContext('2d')
+    console.log(canvas)
+    // setup()
+
+    // setup = () => {
+    //   // document.body.appendChild(canvas)
+    //   // this.setupColorPicker()
+    //   setupCanvas()
+    // }
+
+    const resize = () => {
+      // Unscale the canvas (if it was previously scaled)
+      ctx.setTransform(1, 0, 0, 1, 0, 0)
+
+      // The device pixel ratio is the multiplier between CSS pixels
+      // and device pixels
+      const pixelRatio = window.devicePixelRatio || 1
+
+      // Allocate backing store large enough to give us a 1:1 device pixel
+      // to canvas pixel ratio.
+      const w = canvas.clientWidth * pixelRatio
+      const h = canvas.clientHeight * pixelRatio
+      if (w !== canvas.width || h !== canvas.height) {
+        // Resizing the canvas destroys the current content.
+        // So, save it...
+        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height)
+
+        canvas.width = w; canvas.height = h
+
+        // ...then restore it.
+        ctx.putImageData(imgData, 0, 0)
+      }
+
+      // Scale the canvas' internal coordinate system by the device pixel
+      // ratio to ensure that 1 canvas unit = 1 css pixel, even though our
+      // backing store is larger.
+      ctx.scale(pixelRatio, pixelRatio)
+
+      ctx.lineWidth = 5
+      ctx.lineJoin = 'round'
+      ctx.lineCap = 'round'
+    }
+
+    const setupCanvas = () => {
+      // Set the size of the canvas and attach a listener
+      // to handle resizing.
+      resize()
+      window.addEventListener('resize', resize)
+
+      window.addEventListener('mousedown', (e) => {
+        this.state.currentMousePosition = pos(e)
+      })
+
+      window.addEventListener('mousemove', (e) => {
+        if (!e.buttons) return
+        this.state.lastMousePosition = this.state.currentMousePosition
+        this.state.currentMousePosition = pos(e)
+        this.state.lastMousePosition && this.state.currentMousePosition &&
+        draw(this.state.lastMousePosition, this.state.currentMousePosition, this.state.selectedColor, true)
+      })
+    }
+
+    const pos = (e) => {
+      return [
+        e.pageX - canvas.offsetLeft,
+        e.pageY - canvas.offsetTop
+      ]
+    }
+
+    setupCanvas()
+  }
+
+  clickColor = event => {
+    if (!event.target.dataColor) return
+    this.setState({
+      selectedColor: event.target.dataColor
+    })
+    const current = picker.querySelector('.selected')
+    current && current.classList.remove('selected')
+    target.classList.add('selected')
+  }
 
   render() {
 
     return (
       <div>
 
+          <canvas
+            className="whiteBoard"
+            ref={el => this._canvas = el }>
+          </canvas>
+
+          <div className="color-selector" onClick={this.clickColor}>
+            {this.state.colors.map(color => {
+              return (
+                <div className={`marker ${color}`} data-color={color} key={color}></div>
+              )
+            })}
+          </div>
       </div>
     )
   }

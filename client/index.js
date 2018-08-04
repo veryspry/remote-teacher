@@ -13,7 +13,7 @@ import App from './app'
 // import exportWebRTC from './webRTC'
 // exportWebRTC() // execute WebRTC file
 
-import webrtc from './webRTC/'
+// import webrtc from './webRTC/'
 
 // import { default as whiteboard, draw} from './whiteboard/index'
 
