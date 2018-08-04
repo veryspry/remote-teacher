@@ -2,9 +2,6 @@
 
 import io from 'socket.io-client'
 import { default as whiteboard, draw} from './whiteboard.js'
-// import {  draw} from './whiteboard.js'
-
-
 
 const socket = io(window.location.origin)
 
@@ -12,17 +9,8 @@ socket.on('connect', () => {
   console.log('Connected!')
 })
 
-const createWhiteBoard = () => {
-  // whiteboard.on('draw', (start, end, color) => {
-  //   clientSocket.emit('draw-from-client', start, end, color)
-  // })
-}
-
-// Function to fire when you want a user to join
-export const joinRoom = roomName => {
-
+const joinOrCreateRoom = roomName => {
   let isInitiator
-
   // create or ask to join a room
   // window.room = prompt("Enter room name:")
   window.room = roomName
@@ -51,6 +39,13 @@ export const joinRoom = roomName => {
   socket.on('log', function(array) {
     console.log.apply(console, array)
   })
+}
+
+
+// Function to fire when you want a user to join
+export const joinRoom = roomName => {
+
+  joinOrCreateRoom(roomName)
 
   // listen for whiteboard events
   socket.on('draw-from-server', (start, end, color) => {
