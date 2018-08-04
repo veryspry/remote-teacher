@@ -1,12 +1,22 @@
 'use strict'
 
 import io from 'socket.io-client'
+import { default as whiteboard, draw} from './whiteboard.js'
+// import {  draw} from './whiteboard.js'
+
+
 
 const socket = io(window.location.origin)
 
 socket.on('connect', () => {
   console.log('Connected!')
 })
+
+const createWhiteBoard = () => {
+  // whiteboard.on('draw', (start, end, color) => {
+  //   clientSocket.emit('draw-from-client', start, end, color)
+  // })
+}
 
 // Function to fire when you want a user to join
 export const joinRoom = roomName => {
@@ -42,10 +52,18 @@ export const joinRoom = roomName => {
     console.log.apply(console, array)
   })
 
+  // listen for whiteboard events
+  socket.on('draw-from-server', (start, end, color) => {
+    draw(start, end, color)
+  })
+
+  // emit whiteboard events
+  whiteboard.on('draw', (start, end, color) => {
+    socket.emit('draw-from-client', start, end, color)
+  })
+
 }
 
 
-
-
-
+// export { default as whiteboard, draw} from './whiteboard'
 export default socket

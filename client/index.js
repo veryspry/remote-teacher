@@ -15,6 +15,8 @@ import App from './app'
 
 import webrtc from './webRTC/'
 
+// import { default as whiteboard, draw} from './whiteboard/index'
+
 
 ReactDOM.render(
   <Provider store={store}>

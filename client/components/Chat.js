@@ -4,6 +4,8 @@ import webrtc from '../webRTC/'
 import SimpleWebRTC from 'simplewebrtc'
 import {joinRoom} from '../socket/index'
 
+import WhiteBoard from './WhiteBoard'
+
 class Chat extends React.Component {
 
 
@@ -29,6 +31,9 @@ class Chat extends React.Component {
         <div className="videoWrapper">
           <div id="remoteVideos" ></div>
           <video id="localVideo" autoPlay playsInline></video>
+        </div>
+        <div className="whiteBoardWrapper">
+          
         </div>
       </div>
     )

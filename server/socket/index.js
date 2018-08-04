@@ -58,6 +58,12 @@ module.exports = io => {
         }
     })
 
+    // set up whiteboard listener
+    socket.on('draw-from-client', (start, end, color) => {
+      socket.broadcast.emit('draw-from-server', start, end, color)
+    })
+
+
     socket.on('disconnect', () => {
       console.log(`Connection ${socket.id} has left the building`)
     })
