@@ -14,10 +14,10 @@ const webrtc = new SimpleWebRTC({
 })
 
 // we have to wait until it's ready
-webrtc.on('readyToCall', function () {
-    // you can name it anything
-    webrtc.joinRoom('coolroom')
-    console.log('this is the webrtc object', webrtc)
-})
+// webrtc.on('readyToCall', function () {
+//     // you can name it anything
+//     webrtc.joinRoom('coolroom')
+//     console.log('this is the webrtc object', webrtc)
+// })
 
 export default webrtc

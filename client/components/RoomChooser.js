@@ -1,21 +1,35 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import { NavLink } from 'react-router-dom'
 
 class RoomChooser extends React.Component {
 
 
 
+  state = {
+    roomName: ''
+  }
+
+  handleChange = event => {
+    this.setState({
+      [event.target.name]: event.target.value
+    })
+  }
+
+  handleSubmit = event => {
+    event.preventDefault()
+    console.log('hey, you clicked!')
+  }
+
   render() {
 
     return (
       <div className="roomSelectForm">
-        <form>
-          <input type="text"></input>
-          <input type="text"></input>
+        <form onSubmit={this.handleSubmit} onChange={this.handleChange}>
+          <input type="text" name="roomName" value={this.state.roomName}></input>
           <div>
-            <button id="startButton">Start</button>
-            <button id="callButton">Call</button>
-            <button id="hangupButton">Hang Up</button>
+
+            <NavLink to={`rooms/${this.state.roomName}`} className="">Join Room</NavLink>
           </div>
         </form>
       </div>
