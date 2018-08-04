@@ -21,8 +21,6 @@ module.exports = io => {
         let clientsInRoom = io.sockets.adapter.rooms[room]
         let numClients = clientsInRoom ? Object.keys(clientsInRoom.sockets).length : 0
 
-        log('Room ' + room + ' now has ' + numClients + ' client(s)')
-
         // Create room if room doesn't exist
         if (numClients === 0) {
           socket.join(room)
@@ -38,13 +36,21 @@ module.exports = io => {
         } else { // max two clients
           socket.emit('full', room)
         }
+        let clientsInRoom2 = io.sockets.adapter.rooms[room]
+        let numClients2 = clientsInRoom2 ? Object.keys(clientsInRoom2.sockets).length : 0
+
+        console.log('clients in room', clientsInRoom2)
+
+        console.log('number of clients', numClients2)
+        log('Room ' + room + ' now has ' + numClients2 + ' client(s)')
+
       })
 
       socket.on('ipaddr', function() {
         let ifaces = os.networkInterfaces()
         for (var dev in ifaces) {
           ifaces[dev].forEach(function(details) {
-            // make this IPv6 compatible
+            // make this IPv6 compatible default was IPv4
             if (details.family === 'IPv6' && details.address !== '127.0.0.1') {
               socket.emit('ipaddr', details.address)
             }

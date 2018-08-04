@@ -8,8 +8,19 @@ import App from './app'
 
 // establishes socket connection
 import './socket/'
-import exportWebRTC from './webRTC'
-exportWebRTC() // execute WebRTC file
+
+// establish webRTC connection
+// import exportWebRTC from './webRTC'
+// exportWebRTC() // execute WebRTC file
+
+var quickconnect = require('rtc-quickconnect')
+
+quickconnect('https://switchboard.rtc.io/', { room: 'coolroom' })
+  .on('call:started', function(id, pc, data) {
+    console.log('we have a new rtc quick-connect   connection to: ' + id)
+  })
+
+
 
 ReactDOM.render(
   <Provider store={store}>

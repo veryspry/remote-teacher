@@ -6,6 +6,8 @@
 // set up optional constraints see -- https://w3c.github.io/mediacapture-main/getusermedia.html#media-track-constraints
 
 const exportWebRTC = () => {
+
+  // set up media options
   const mediaStreamConstraints = {
     video: true,
     width: {
@@ -19,7 +21,7 @@ const exportWebRTC = () => {
 
   // Set up to exchange only video.
   const offerOptions = {
-    offerToReceiveVideo: 1,
+    // offerToReceiveVideo: 1,
   }
 
   // Define initial start time of the call (defined as connection between peers).
@@ -44,6 +46,7 @@ const exportWebRTC = () => {
     localStream = mediaStream
     trace('Received local stream.')
     callButton.disabled = false  // Enable call button.
+    console.log('local stream:', localStream)
   }
 
   // Handles error by logging a message to the console.
@@ -57,6 +60,8 @@ const exportWebRTC = () => {
     remoteVideo.srcObject = mediaStream
     remoteStream = mediaStream
     trace('Remote peer connection received remote stream.')
+    console.log('event:', event);
+    console.log('remote stream:', remoteStream);
   }
 
 
@@ -67,7 +72,7 @@ const exportWebRTC = () => {
     const video = event.target
     trace(`${video.id} videoWidth: ${video.videoWidth}px, ` +
       `videoHeight: ${video.videoHeight}px.`)
-    }
+  }
 
     // Logs a message with the id and size of a video element.
     // This event is fired when video begins streaming.
@@ -203,11 +208,19 @@ const exportWebRTC = () => {
 
 
     // Handles start button action: creates local MediaStream.
-    function startAction() {
+    async function startAction() {
       startButton.disabled = true
-      navigator.mediaDevices.getUserMedia(mediaStreamConstraints)
-      .then(gotLocalMediaStream).catch(handleLocalMediaStreamError)
-      trace('Requesting local stream.')
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia(mediaStreamConstraints)
+        console.log(stream)
+        gotLocalMediaStream(stream)
+        trace('Requesting local stream.')
+      } catch (err) {
+        handleLocalMediaStreamError(err)
+      }
+      // navigator.mediaDevices.getUserMedia(mediaStreamConstraints)
+      // .then(gotLocalMediaStream).catch(handleLocalMediaStreamError)
+      // trace('Requesting local stream.')
     }
 
     // Handles call button action: creates peer connection.
@@ -287,14 +300,12 @@ const exportWebRTC = () => {
 
         // Gets the "other" peer connection.
         function getOtherPeer(peerConnection) {
-          return (peerConnection === localPeerConnection) ?
-          remotePeerConnection : localPeerConnection
+          return (peerConnection === localPeerConnection) ? remotePeerConnection : localPeerConnection
         }
 
         // Gets the name of a certain peer connection.
         function getPeerName(peerConnection) {
-          return (peerConnection === localPeerConnection) ?
-          'localPeerConnection' : 'remotePeerConnection'
+          return (peerConnection === localPeerConnection) ? 'localPeerConnection' : 'remotePeerConnection'
         }
 
         // Logs an action (text) and the time when it happened on the console.
