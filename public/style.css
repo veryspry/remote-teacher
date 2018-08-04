@@ -1,5 +1,7 @@
 body {
   font-family: sans-serif;
+  margin: 0;
+  max-height: 100vh;
 }
 
 a {
@@ -20,6 +22,59 @@ form div {
   display: inline-block;
 }
 
+/* ========================================================================== */
+    /* NAVBAR */
+/* ========================================================================== */
+
+nav {
+  display: flex;
+  flex-direction: row;
+
+}
+
+.navWrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.navLogin {
+  display: flex;
+  flex-direction: row;
+  margin: auto 30px auto auto;
+}
+
+.roomSelectForm {
+  margin: auto;
+}
+
+/* ========================================================================== */
+    /* VIDEO */
+/* ========================================================================== */
+
+.videoWrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 auto auto;
+}
+
+#remoteVideos {
+  display: flex;
+  flex-direction: column;
+  margin: 0 0 auto auto;
+  /* top: 0; */
+}
+
+#remoteVideos video {
+  width: 30vw;
+  height: auto;
+}
+
+#localVideo {
+  width: 30vw;
+  height: auto;
+  margin: 0 0 auto auto;
+}
+
 .local {
   position: absolute;  right: 10px;
 }
@@ -28,12 +83,7 @@ form div {
   max-width: 200px;
 }
 
-#localVideo {
-  /* position: absolute; */
-  /* right: 20px; */
-  /* bottom: 20px; */
-  /* width: 200px; */
-}
+
 
 video:nth-of-type(2) {
   position: fixed; right: 0; bottom: 0;

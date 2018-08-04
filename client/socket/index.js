@@ -12,7 +12,8 @@ socket.on('connect', () => {
 let isInitiator
 
 // create or ask to join a room
-window.room = prompt("Enter room name:")
+// window.room = prompt("Enter room name:")
+window.room = 'coolroom'
 
 if (room !== "") {
   console.log('Message from client: Asking to join room ' + room)
