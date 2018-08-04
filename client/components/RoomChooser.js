@@ -29,7 +29,7 @@ class RoomChooser extends React.Component {
           <input type="text" name="roomName" value={this.state.roomName}></input>
           <div>
 
-            <NavLink to={`rooms/${this.state.roomName}`} className="">Join Room</NavLink>
+            <NavLink to={`/rooms/${this.state.roomName}`} className="">Join Room</NavLink>
           </div>
         </form>
       </div>

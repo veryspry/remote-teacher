@@ -26,11 +26,6 @@ class Chat extends React.Component {
           <div id="remoteVideos" ></div>
           <video id="localVideo" autoPlay playsInline></video>
         </div>
-        // <div>
-        //   <button id="startButton">Start</button>
-        //   <button id="callButton">Call</button>
-        //   <button id="hangupButton">Hang Up</button>
-        // </div>
       </div>
     )
   }
