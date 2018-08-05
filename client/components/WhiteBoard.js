@@ -24,23 +24,12 @@ class WhiteBoard extends React.Component {
     },
   }
 
-  color
-
   componentDidMount = () => {
-    // const canvas = document.getElementByClassName('whiteBoard')
-    // const ctx = canvas.getContext('2d')
-    // const canvas = this._canvas
-    const canvas = this._canvas
-    const ctx = canvas.getContext('2d')
-    console.log(canvas)
-    // setup()
+  }
 
-    // setup = () => {
-    //   // document.body.appendChild(canvas)
-    //   // this.setupColorPicker()
-    //   setupCanvas()
-    // }
 
+  // fire this inside of canvas ref
+  handleCanvas = (canvas, ctx) => {
     const resize = () => {
       // Unscale the canvas (if it was previously scaled)
       ctx.setTransform(1, 0, 0, 1, 0, 0)
@@ -73,8 +62,10 @@ class WhiteBoard extends React.Component {
       ctx.lineJoin = 'round'
       ctx.lineCap = 'round'
     }
+    console.log('outside setup canvas', ctx)
 
     const setupCanvas = () => {
+      console.log('inside setup canvas', ctx)
       // Set the size of the canvas and attach a listener
       // to handle resizing.
       resize()
@@ -89,7 +80,7 @@ class WhiteBoard extends React.Component {
         this.state.lastMousePosition = this.state.currentMousePosition
         this.state.currentMousePosition = pos(e)
         this.state.lastMousePosition && this.state.currentMousePosition &&
-        draw(this.state.lastMousePosition, this.state.currentMousePosition, this.state.selectedColor, true)
+        draw(this.state.lastMousePosition, this.state.currentMousePosition, this.state.selectedColor, true, ctx)
       })
     }
 
@@ -120,7 +111,15 @@ class WhiteBoard extends React.Component {
 
           <canvas
             className="whiteBoard"
-            ref={el => this._canvas = el }>
+            ref={
+              (el) => {
+                this._canvas = el
+                this._ctx = el.getContext('2d') // return drawing context on canvas
+                this.handleCanvas(el, el.getContext('2d'))
+              }
+            }>
+
+
           </canvas>
 
           <div className="color-selector" onClick={this.clickColor}>

@@ -39,6 +39,21 @@ const joinOrCreateRoom = roomName => {
   socket.on('log', function(array) {
     console.log.apply(console, array)
   })
+
+  // listen for whiteboard events
+  socket.on('draw-from-server', (start, end, color, shouldBroadcast, ctx) => {
+    console.log('after draw-from-server listen', ctx)
+    draw(start, end, color, false, ctx)
+  })
+
+  // emit whiteboard events
+  whiteboard.on('draw', (start, end, color, shouldBroadcast, ctx) => {
+    console.log('before draw-from-client emit', shouldBroadcast, ctx)
+    socket.emit('draw-from-client', start, end, color, ctx)
+    // socket.emit('draw-from-client', ctx)
+    console.log('after draw from client emit', ctx)
+
+  })
 }
 
 
@@ -47,15 +62,6 @@ export const joinRoom = roomName => {
 
   joinOrCreateRoom(roomName)
 
-  // listen for whiteboard events
-  socket.on('draw-from-server', (start, end, color) => {
-    draw(start, end, color)
-  })
-
-  // emit whiteboard events
-  whiteboard.on('draw', (start, end, color) => {
-    socket.emit('draw-from-client', start, end, color)
-  })
 
 }
 

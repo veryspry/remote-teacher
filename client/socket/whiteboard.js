@@ -27,9 +27,10 @@ export default whiteboard
  * @param {String} strokeColor color of the line
  * @param {bool} shouldBroadcast whether to emit an event for this draw
  */
-export function draw (start, end, strokeColor = 'black', shouldBroadcast = true) {
+export function draw (start, end, strokeColor = 'black', shouldBroadcast = true, ctx) {
   // Draw the line between the start and end positions
   // that is colored with the given color.
+  console.log('lets find out where this is breaking down', ctx)
   ctx.beginPath()
   ctx.strokeStyle = strokeColor
   ctx.moveTo(...start)
@@ -40,7 +41,7 @@ export function draw (start, end, strokeColor = 'black', shouldBroadcast = true)
   // If shouldBroadcast is truthy, we will emit a draw event to listeners
   // with the start, end and color data.
   shouldBroadcast &&
-        whiteboard.emit('draw', start, end, strokeColor)
+        whiteboard.emit('draw', start, end, strokeColor, shouldBroadcast, ctx)
 }
 //
 // // State
