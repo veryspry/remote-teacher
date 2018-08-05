@@ -62,7 +62,7 @@ module.exports = io => {
     socket.on('draw-from-client', (start, end, color, ctx) => {
       console.log('start, end', start, end, color)
       console.log('ctx', ctx)
-      // socket.broadcast.emit('draw-from-server', start, end, color, true, ctx)
+      socket.broadcast.emit('draw-from-server', start, end, color, true, ctx)
     })
 
 

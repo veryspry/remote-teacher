@@ -1,6 +1,26 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import whiteboard, {draw} from '../socket/whiteboard'
+import { default as whiteboard, draw} from '../socket/whiteboard.js'
+
+import io from 'socket.io-client'
+const socket = io(window.location.origin)
+
+let clientCtx = {}
+
+// // listen for whiteboard events
+// socket.on('draw-from-server', (start, end, color, shouldBroadcast, ctx) => {
+//   console.log('after draw-from-server listen', ctx)
+//   draw(start, end, color, false, clientCtx)
+// })
+//
+// // emit whiteboard events
+// whiteboard.on('draw', (start, end, color, shouldBroadcast, ctx) => {
+//   // console.log('before draw-from-client emit', shouldBroadcast, ctx)
+//   socket.emit('draw-from-client', start, end, color, ctx)
+//   // socket.emit('draw-from-client', ctx)
+//   // console.log('after draw from client emit', ctx)
+// })
+
 
 class WhiteBoard extends React.Component {
   state = {
@@ -25,6 +45,8 @@ class WhiteBoard extends React.Component {
   }
 
   componentDidMount = () => {
+    clientCtx = this._ctx
+    console.log(draw)
   }
 
 
@@ -62,10 +84,8 @@ class WhiteBoard extends React.Component {
       ctx.lineJoin = 'round'
       ctx.lineCap = 'round'
     }
-    console.log('outside setup canvas', ctx)
 
     const setupCanvas = () => {
-      console.log('inside setup canvas', ctx)
       // Set the size of the canvas and attach a listener
       // to handle resizing.
       resize()
@@ -107,7 +127,7 @@ class WhiteBoard extends React.Component {
   render() {
 
     return (
-      <div>
+      <div className="whiteBoardWrapper">
 
           <canvas
             className="whiteBoard"
@@ -117,15 +137,12 @@ class WhiteBoard extends React.Component {
                 this._ctx = el.getContext('2d') // return drawing context on canvas
                 this.handleCanvas(el, el.getContext('2d'))
               }
-            }>
-
-
-          </canvas>
+            } />
 
           <div className="color-selector" onClick={this.clickColor}>
             {this.state.colors.map(color => {
               return (
-                <div className={`marker ${color}`} data-color={color} key={color}></div>
+                <div className={`marker ${color}`} data-color={color} key={color} />
               )
             })}
           </div>
@@ -134,4 +151,5 @@ class WhiteBoard extends React.Component {
   }
 }
 
+export {clientCtx}
 export default WhiteBoard

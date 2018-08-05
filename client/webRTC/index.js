@@ -3,6 +3,9 @@ import SimpleWebRTC from 'simplewebrtc'
 const localVideoEl = document.querySelector('#localVideo')
 const remoteVideosEl = document.querySelector('#remoteVideos')
 
+// Great resource:
+// https://github.com/andyet/SimpleWebRTC/issues/286
+
 
 const newWebRTC = () => {
   // create WebRTC object
@@ -12,7 +15,8 @@ const newWebRTC = () => {
       // the id/element dom element that will hold remote videos
       remoteVideosEl: 'remoteVideos',
       // immediately ask for camera access
-      autoRequestMedia: true
+      autoRequestMedia: true,
+      media: { audio: true, video: true },
   })
   return webrtc
 }

@@ -3,6 +3,9 @@
 import io from 'socket.io-client'
 import { default as whiteboard, draw} from './whiteboard.js'
 
+// import {clientCtx} from '../components/WhiteBoard'
+// console.log(clientCtx)
+
 const socket = io(window.location.origin)
 
 socket.on('connect', () => {
@@ -52,7 +55,6 @@ const joinOrCreateRoom = roomName => {
     socket.emit('draw-from-client', start, end, color, ctx)
     // socket.emit('draw-from-client', ctx)
     console.log('after draw from client emit', ctx)
-
   })
 }
 
