@@ -59,8 +59,8 @@ module.exports = io => {
     })
 
     // set up whiteboard listener
-    socket.on('draw-from-client', (start, end, color, ctx) => {
-      socket.broadcast.emit('draw-from-server', start, end, color, true, ctx)
+    socket.on('draw-from-client', (start, end, color, lineWidth) => {
+      socket.broadcast.emit('draw-from-server', start, end, color, true, lineWidth)
     })
 
 

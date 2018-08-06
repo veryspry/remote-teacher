@@ -284,25 +284,32 @@ video:nth-of-type(2) {
 
 /* Colors */
 .black {
-  background-color: black;
+  background-color: #000000;
 }
 .purple {
   background-color: #680b5f;
 }
 .blue {
-  background-color: #0b4c68;
+  /* background-color: #0b4c68; */
+  background-color: #369fa1;
 }
 .red {
-  background-color: #f5163e;
+  /* background-color: #f5163e; */
+  background-color: #D79288;
 }
 .green {
   background-color: #4CAF50;
 }
 .orange {
-  background-color: #fa8f23;
+  /* background-color: #fa8f23; */
+  background-color: #BB8C3E;
 }
 .yellow {
-  background-color: #ffc221;
+  /* background-color: #ffc221; */
+  background-color: #B8AF3D;
+}
+.white {
+  background-color: #ffffff;
 }
 
 .whiteBoardWrapper {
@@ -329,7 +336,7 @@ canvas {
 .color-selector {
     position: absolute;
     z-index: 1;
-    margin: auto auto 20px 5px;
+    margin: auto auto 20px 15px;
     bottom: 10%;
     background: none;
     display: flex;
@@ -342,6 +349,7 @@ canvas {
     height: 40px;
     box-sizing: border-box;
     border-radius: 5px;
+    border: none;
     margin-top: 10px;
     margin-bottom: 10px;
     transition: box-shadow 113ms, transform 113ms;
@@ -350,8 +358,18 @@ canvas {
 }
 
 .marker:hover {
-  box-shadow: 0 0 0 rgba(0, 0, 0,);
+  /* box-shadow: 0px 0px 0px rgba(0, 0, 0,0); */
   cursor: pointer;
+  /* width: 48px; */
+  /* height: 48px; */
+  border-radius: 50%;
+  /* animation: pulse 1s infinite; */
+}
+
+@keyframes pulse {
+  100% {
+    background-color: #000000;
+  }
 }
 
 .marker:first-of-type {
@@ -361,6 +379,12 @@ canvas {
 .marker.selected {
     box-shadow: none;
     transform: translate(0, 0);
+}
+
+.marker input {
+  /* height: 100%; */
+  /* width: 100%; */
+  /* visibility: hidden; */
 }
 
 /* ========================================================================== */

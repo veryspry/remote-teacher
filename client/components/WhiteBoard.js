@@ -33,17 +33,19 @@ class WhiteBoard extends React.Component {
       'yellow',
       'white',
     ],
+    lineWeights: [1,2,3,4,5,6,7,8,9,10,11,12,25,50],
     colorValues: {
-      black: ['black', 'black'],
+      black: ['black', '#000000'],
       purple: [ 'purple', '#680b5f'],
-      blue: ['blue', '#0b4c68'],
-      red: ['red', '#f5163e'],
+      blue: ['blue', '#369FA1'],
+      red: ['red', '#D79288'],
       green: ['green', '#4CAF50'],
-      orange: ['orange', '#fa8f23'],
-      yellow: ['yellow', '#ffc221'],
-      white:['white', 'white'],
+      orange: ['orange', '#BB8C3E'],
+      yellow: ['yellow', '#B8AF3D'],
+      white:['white', '#ffffff'],
     },
     selectedColor: 'black',
+    lineWidth: 1,
   }
 
   componentDidMount = () => {
@@ -71,12 +73,11 @@ class WhiteBoard extends React.Component {
     this.currentMousePosition = this.pos(event)
     this.lastMousePosition && this.currentMousePosition &&
     this.draw(this.lastMousePosition, this.currentMousePosition, this.state.selectedColor, true)
-
   }
 
-  draw (start, end, strokeColor = 'black', shouldBroadcast = true) {
+  draw (start, end, strokeColor = 'black', shouldBroadcast = true, lineWidth = this.state.lineWidth) {
 
-    this.ctx.lineWidth = 2
+    this.ctx.lineWidth = lineWidth
 
     this.ctx.beginPath()
     // this.ctx.strokeStyle = strokeColor
@@ -89,7 +90,7 @@ class WhiteBoard extends React.Component {
     // If shouldBroadcast is truthy, we will emit a draw event to listeners
     // with the start, end and color data.
     shouldBroadcast &&
-          whiteboard.emit('draw', start, end, strokeColor, shouldBroadcast)
+          whiteboard.emit('draw', start, end, this.state.selectedColor, false, lineWidth)
   }
 
   // this resizes the canvas
@@ -129,20 +130,22 @@ class WhiteBoard extends React.Component {
   clickColor = event => {
     if (!event.target.value) return
     const hex = event.target.value.split(',')[1]
-    console.log(hex)
     this.setState({
       selectedColor: hex
     })
-    // const current = picker.querySelector('.selected')
-    // current && current.classList.remove('selected')
-    // target.classList.add('selected')
+  }
+
+  lineWeightSelect = event => {
+    this.setState({
+      lineWidth: event.target.value
+    })
   }
 
   render() {
 
     // listen for whiteboard events
-    socket.on('draw-from-server', (start, end, color, shouldBroadcast, ctx) => {
-      this.draw(start, end, color, false)
+    socket.on('draw-from-server', (start, end, color, shouldBroadcast, lineWidth) => {
+      this.draw(start, end, color, false, lineWidth)
     })
 
     return (
@@ -152,15 +155,25 @@ class WhiteBoard extends React.Component {
           <div className="color-selector" onClick={this.clickColor}>
             {this.state.colors.map(color => {
               return (
-                <input
+
+                // <div key={color} className={`marker ${color}`}>
+                  <input
                   readOnly
                   type="check"
-                  className={`marker ${color}`}
                   value={this.state.colorValues[color]}
                   key={color}
-                />
+                  className={`marker ${color}`}
+                   />
+                // </div>
+
               )
             })}
+
+            <select onChange={this.lineWeightSelect}>
+              {this.state.lineWeights.map(weight => {
+                return <option key={weight} value={weight}>{weight}</option>
+              })}
+            </select>
           </div>
 
           <canvas
