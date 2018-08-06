@@ -82,8 +82,7 @@ class Chat extends React.Component {
         </div>
 
         <WhiteBoard />
-
-        {/* <SpotifyPlayer /> */}
+        
         <div className="videoWrapper">
           <div id="remoteVideos"  />
           <div className="localVideoWrapper">

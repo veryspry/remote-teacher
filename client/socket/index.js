@@ -43,19 +43,12 @@ const joinOrCreateRoom = roomName => {
     console.log.apply(console, array)
   })
 
-  // // listen for whiteboard events
+  // // listen for whiteboard events (moved into react component for direct access to ctx)
   // socket.on('draw-from-server', (start, end, color, shouldBroadcast, ctx) => {
   //   console.log('after draw-from-server listen', ctx)
   //   draw(start, end, color, false, ctx)
   // })
 
-  // emit whiteboard events
-  whiteboard.on('draw', (start, end, color, shouldBroadcast, ctx) => {
-    console.log('before draw-from-client emit', shouldBroadcast, ctx)
-    socket.emit('draw-from-client', start, end, color, ctx)
-    // socket.emit('draw-from-client', ctx)
-    console.log('after draw from client emit', ctx)
-  })
 }
 
 
@@ -64,6 +57,11 @@ export const joinRoom = roomName => {
 
   joinOrCreateRoom(roomName)
 
+  // emit whiteboard events
+  whiteboard.on('draw', (start, end, color, shouldBroadcast, ctx) => {
+    socket.emit('draw-from-client', start, end, color, false)
+    // socket.emit('draw-from-client', ctx)
+  })
 
 }
 

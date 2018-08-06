@@ -5,22 +5,6 @@ import { default as whiteboard } from '../socket/whiteboard.js'
 import io from 'socket.io-client'
 const socket = io(window.location.origin)
 
-let clientCtx = {}
-
-// // listen for whiteboard events
-// socket.on('draw-from-server', (start, end, color, shouldBroadcast, ctx) => {
-//   console.log('after draw-from-server listen', ctx)
-//   draw(start, end, color, false, clientCtx)
-// })
-//
-// // emit whiteboard events
-// whiteboard.on('draw', (start, end, color, shouldBroadcast, ctx) => {
-//   // console.log('before draw-from-client emit', shouldBroadcast, ctx)
-//   socket.emit('draw-from-client', start, end, color, ctx)
-//   // socket.emit('draw-from-client', ctx)
-//   // console.log('after draw from client emit', ctx)
-// })
-
 
 class WhiteBoard extends React.Component {
 
@@ -49,30 +33,35 @@ class WhiteBoard extends React.Component {
       'yellow',
       'white',
     ],
+    colorValues: {
+      black: ['black', 'black'],
+      purple: [ 'purple', '#680b5f'],
+      blue: ['blue', '#0b4c68'],
+      red: ['red', '#f5163e'],
+      green: ['green', '#4CAF50'],
+      orange: ['orange', '#fa8f23'],
+      yellow: ['yellow', '#ffc221'],
+      white:['white', 'white'],
+    },
     selectedColor: 'black',
   }
 
   componentDidMount = () => {
     this.ctx = this.canvas.getContext('2d')
-    // this.canvas.addEventListener('resize', resize)
     this.canvas.addEventListener('mousedown', this.handleMouseDown)
     this.canvas.addEventListener('mousemove', this.handleMouseMove)
-
     this.resize()
-    this.canvas.addEventListener('resize', this.resize)
+    // this.canvas.addEventListener('resize', this.resize)
   }
 
   pos = (e) => {
     return [
       e.pageX - this.canvas.offsetLeft,
       e.pageY - this.canvas.offsetTop
-      // e.pageX,
-      // e.pageY
     ]
   }
 
   handleMouseDown = event => {
-    console.log(this.pos(event))
     this.currentMousePosition = this.pos(event)
   }
 
@@ -90,7 +79,8 @@ class WhiteBoard extends React.Component {
     this.ctx.lineWidth = 2
 
     this.ctx.beginPath()
-    this.ctx.strokeStyle = strokeColor
+    // this.ctx.strokeStyle = strokeColor
+    this.ctx.strokeStyle = this.state.selectedColor
     this.ctx.moveTo(...start)
     this.ctx.lineTo(...end)
     this.ctx.closePath()
@@ -136,43 +126,22 @@ class WhiteBoard extends React.Component {
     this.ctx.lineCap = 'round'
   }
 
-  // // fire this inside of canvas ref
-  // setupCanvas = () => {
-  //   // Set the size of the canvas and attach a listener
-  //   // to handle resizing.
-  //   resize()
-  //   this.canvas.addEventListener('resize', resize)
-  //
-  //   // window.addEventListener('mousedown', (e) => {
-  //   //   this.state.currentMousePosition = pos(e)
-  //   // })
-  //   //
-  //   // window.addEventListener('mousemove', (e) => {
-  //   //   if (!e.buttons) return
-  //   //   this.state.lastMousePosition = this.state.currentMousePosition
-  //   //   this.state.currentMousePosition = pos(e)
-  //   //   this.state.lastMousePosition && this.state.currentMousePosition &&
-  //   //   draw(this.state.lastMousePosition, this.state.currentMousePosition, this.state.selectedColor, true, ctx)
-  //   // })
-  //
-  //   setupCanvas()
-  // }
-
   clickColor = event => {
-    if (!event.target.dataColor) return
+    if (!event.target.value) return
+    const hex = event.target.value.split(',')[1]
+    console.log(hex)
     this.setState({
-      selectedColor: event.target.dataColor
+      selectedColor: hex
     })
-    const current = picker.querySelector('.selected')
-    current && current.classList.remove('selected')
-    target.classList.add('selected')
+    // const current = picker.querySelector('.selected')
+    // current && current.classList.remove('selected')
+    // target.classList.add('selected')
   }
 
   render() {
 
     // listen for whiteboard events
     socket.on('draw-from-server', (start, end, color, shouldBroadcast, ctx) => {
-      console.log('after draw-from-server listen')
       this.draw(start, end, color, false)
     })
 
@@ -183,7 +152,13 @@ class WhiteBoard extends React.Component {
           <div className="color-selector" onClick={this.clickColor}>
             {this.state.colors.map(color => {
               return (
-                <div className={`marker ${color}`} data-color={color} key={color} />
+                <input
+                  readOnly
+                  type="check"
+                  className={`marker ${color}`}
+                  value={this.state.colorValues[color]}
+                  key={color}
+                />
               )
             })}
           </div>
@@ -191,14 +166,7 @@ class WhiteBoard extends React.Component {
           <canvas
             className="whiteBoard"
             ref={this.setRef}
-            // ref={
-            //   (el) => {
-            //     this._canvas = el
-            //     this._ctx = el.getContext('2d') // return drawing context on canvas
-            //     this.handleCanvas(el, el.getContext('2d'))
-            //   }
-            // }
-            />
+          />
         {/* </div> */}
 
 
@@ -206,6 +174,4 @@ class WhiteBoard extends React.Component {
     )
   }
 }
-
-export {clientCtx}
 export default WhiteBoard

@@ -60,8 +60,6 @@ module.exports = io => {
 
     // set up whiteboard listener
     socket.on('draw-from-client', (start, end, color, ctx) => {
-      console.log('start, end', start, end, color)
-      console.log('ctx', ctx)
       socket.broadcast.emit('draw-from-server', start, end, color, true, ctx)
     })
 
