@@ -30,6 +30,7 @@ form div {
 
 #app {
   height: 100vh;
+  max-height: 100vh;
 }
 
 /* ========================================================================== */
@@ -224,6 +225,7 @@ nav h1 {
 .videoWrapper {
   display: flex;
   flex-direction: column;
+  height: calc(100vh - 50px);
   margin: auto 0 auto auto;
   padding: 0;
   text-align: center;
@@ -367,8 +369,13 @@ canvas {
 
 .spotifyWrapper {
   min-width: 300px;
+  /* max-height: 300px; */
   position: absolute;
   bottom: 0;
   right: 50%;
   box-shadow: 3px -1px 8px grey;
+}
+
+.spotifyWrapper iframe {
+  /* height: 100%; */
 }

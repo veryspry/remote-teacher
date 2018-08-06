@@ -43,11 +43,11 @@ const joinOrCreateRoom = roomName => {
     console.log.apply(console, array)
   })
 
-  // listen for whiteboard events
-  socket.on('draw-from-server', (start, end, color, shouldBroadcast, ctx) => {
-    console.log('after draw-from-server listen', ctx)
-    draw(start, end, color, false, ctx)
-  })
+  // // listen for whiteboard events
+  // socket.on('draw-from-server', (start, end, color, shouldBroadcast, ctx) => {
+  //   console.log('after draw-from-server listen', ctx)
+  //   draw(start, end, color, false, ctx)
+  // })
 
   // emit whiteboard events
   whiteboard.on('draw', (start, end, color, shouldBroadcast, ctx) => {
