@@ -4,12 +4,32 @@ import newWebRTC from '../webRTC/'
 import SimpleWebRTC from 'simplewebrtc'
 import {joinRoom} from '../socket/index'
 import WhiteBoard from './WhiteBoard'
-import SpotifyPlayer from './SpotifyPlayer'
+import SpotifyPlayer from 'react-spotify-player'
+// import SpotifyPlayer from './SpotifyPlayer'
 // import WhiteBoard from './WhiteBoard'
 
 import Spotify from '../spotify/index'
 
+// size may also be a plain string using the presets 'large' or 'compact'
+// const size = {
+//   width: '100%',
+//   height: 300,
+// }
+// const view = 'list' // or 'coverart'
+// const theme = 'black' // or 'white'
+
+
+
 class Chat extends React.Component {
+
+  state = {
+    size: {
+      width: '100%',
+      height: 300,
+    },
+    view: 'list', // or 'coverart'
+    theme: 'black', // or 'white'
+  }
 
 
   componentDidMount = async () => {
@@ -21,7 +41,6 @@ class Chat extends React.Component {
     webrtc.on('readyToCall', function () {
       // you can name it anything
       webrtc.joinRoom(roomName)
-      console.log('this is the webrtc object', webrtc)
     })
 
     webrtc.mute()
@@ -30,7 +49,7 @@ class Chat extends React.Component {
   }
 
   call = () => {
-    console.log(webrtc);
+    console.log(webrtc)
   }
 
   hangUp = () => {
@@ -42,11 +61,34 @@ class Chat extends React.Component {
 
     return (
       <div className="chatWrapper">
+
+
+        <div className="spotifyWrapper">
+          {/* <form>
+            <div className="searchAlbumWrapper">
+              <label htmlFor="searchAlbum">
+                <small>Search Album Name:</small>
+              </label>
+              <input name="searchAlbum" type="text" />
+            </div>
+          </form> */}
+          <SpotifyPlayer
+            // uri={`spotify:album:1TIUsv8qmYLpBEhvmBmyBk`}
+            uri={`spotify:album:0A13JySVHzBoRZFk2o89Wl`}
+            size={this.state.size}
+            view={this.state.view}
+            theme={this.state.theme}
+          />
+        </div>
+
         <WhiteBoard />
+
         {/* <SpotifyPlayer /> */}
         <div className="videoWrapper">
           <div id="remoteVideos"  />
-          <video id="localVideo" autoPlay playsInline />
+          <div className="localVideoWrapper">
+            <video id="localVideo" autoPlay playsInline />
+          </div>
           {/* <div className="videoBtnWrapper"> */}
             {/* <button onClick={this.call} className="videoBtn">Call</button> */}
             {/* <button onClick={this.hangUp} className="videoBtn">Hang Up</button> */}

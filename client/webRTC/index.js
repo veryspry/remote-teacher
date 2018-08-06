@@ -16,7 +16,7 @@ const newWebRTC = () => {
       remoteVideosEl: 'remoteVideos',
       // immediately ask for camera access
       autoRequestMedia: true,
-      media: { audio: true, video: true },
+      media: { audio: false, video: true },
   })
   return webrtc
 }

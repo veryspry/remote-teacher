@@ -53,14 +53,6 @@ class WhiteBoard extends React.Component {
 
   // fire this inside of canvas ref
   handleCanvas = (canvas, ctx) => {
-
-    const pos = (e) => {
-      return [
-        e.pageX - canvas.offsetLeft,
-        e.pageY - canvas.offsetTop
-      ]
-    }
-
     const resize = () => {
       // Unscale the canvas (if it was previously scaled)
       ctx.setTransform(1, 0, 0, 1, 0, 0)
@@ -101,22 +93,23 @@ class WhiteBoard extends React.Component {
       window.addEventListener('resize', resize)
 
       window.addEventListener('mousedown', (e) => {
-        this.setState({
-          currentMousePosition: pos(e)
-        })
+        this.state.currentMousePosition = pos(e)
       })
 
       window.addEventListener('mousemove', (e) => {
         if (!e.buttons) return
-        let current = this.state.currentMousePosition
-
-        this.setState({
-          lastMousePosition: current,
-          currentMousePosition: pos(e),
-        })
+        this.state.lastMousePosition = this.state.currentMousePosition
+        this.state.currentMousePosition = pos(e)
         this.state.lastMousePosition && this.state.currentMousePosition &&
         draw(this.state.lastMousePosition, this.state.currentMousePosition, this.state.selectedColor, true, ctx)
       })
+    }
+
+    const pos = (e) => {
+      return [
+        e.pageX - canvas.offsetLeft,
+        e.pageY - canvas.offsetTop
+      ]
     }
 
     setupCanvas()
@@ -136,16 +129,16 @@ class WhiteBoard extends React.Component {
 
     return (
       <div className="whiteBoardWrapper">
+        {/* <div className="whiteBoardScroll"> */}
 
-        <div className="color-selector" onClick={this.clickColor}>
-          {this.state.colors.map(color => {
-            return (
-              <div className={`marker ${color}`} data-color={color} key={color} />
-            )
-          })}
-        </div>
+          <div className="color-selector" onClick={this.clickColor}>
+            {this.state.colors.map(color => {
+              return (
+                <div className={`marker ${color}`} data-color={color} key={color} />
+              )
+            })}
+          </div>
 
-        <div>
           <canvas
             className="whiteBoard"
             ref={
@@ -155,7 +148,7 @@ class WhiteBoard extends React.Component {
                 this.handleCanvas(el, el.getContext('2d'))
               }
             } />
-        </div>
+        {/* </div> */}
 
 
       </div>
