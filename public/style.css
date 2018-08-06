@@ -2,6 +2,7 @@ body {
   font-family: sans-serif;
   margin: 0;
   max-height: 100vh;
+  background-color: lightgrey;
 }
 
 a {
@@ -22,19 +23,32 @@ form div {
   display: inline-block;
 }
 
+#app {
+  height: 100vh;
+}
+
 /* ========================================================================== */
     /* NAVBAR */
 /* ========================================================================== */
 
-nav {
-  display: flex;
-  flex-direction: row;
-
-}
-
 .navWrapper {
   display: flex;
   flex-direction: row;
+  height: 50px;
+  max-height: 50px;
+  background-color: black;
+  /* margin: 0 0 40px 0; */
+}
+
+nav {
+  display: flex;
+  flex-direction: row;
+}
+
+
+nav h1 {
+  color: white;
+  margin: auto 40px;
 }
 
 .navLogin {
@@ -43,13 +57,159 @@ nav {
   margin: auto 30px auto auto;
 }
 
+.navLogin a {
+  color: white;
+  font-weight: 100;
+  right: 0;
+}
+
+.navLogin a:hover {
+  text-decoration: underline;
+}
+
 .roomSelectForm {
   margin: auto;
 }
 
+/* ========================================================================== */
+    /* AUTH FORM */
+/* ========================================================================== */
+
+.authFormMain {
+  margin: 0;
+  height: calc(100vh - 50px);
+  background: url('/photos/headphones.jpg');
+  background-size: cover;
+  display: flex;
+}
+
+.authFormWrapper {
+  margin: auto;
+  padding: 40px 0;
+  min-height: 40vh;
+  width: 50vw;
+  text-align: center;
+  /* border: 1px solid grey; */
+  border-radius: 10px;
+  /* box-shadow: 1px 1px 1px lightgrey; */
+  /* background: radial-gradient(circle at bottom center, #FFC837 15px, #FF8008); */
+  background: rgba(255, 255, 255, .7);
+}
+
+.authFormHeading {
+  display: flex;
+  flex-direction: row;
+  margin: 0 auto;
+}
+
+.authFormHeading h3 {
+  margin: auto 5px auto 0;
+  font-size: 50px;
+  font-weight: 100;
+}
+
+.authFormHeading h4 {
+  margin: auto 5px auto 0;
+  font-size: 15px;
+}
+
+.authFormHeading a,
+.authFormWrapper a {
+
+  margin: auto 5px auto 0;
+  font-size: 20px;
+  text-decoration: underline;
+}
+
+.authFormHeading a:hover,
+.authFormWrapper a:hover {
+  text-decoration: none;
+}
+
+.authFormWrapper form {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+
+.authInputWrapper {
+
+}
+
+.authInputWrapper input {
+  height: 25px;
+  width: 40%;
+}
+
+.authBtnWrapper button {
+  height: 25px;
+  width: 20%;
+  background-color: #00BCD4;
+  cursor: pointer;
+}
+
+
+/* ========================================================================== */
+    /* JOIN ROOM */
+/* ========================================================================== */
+
+.roomSelectWrapper {
+  margin: 0;
+  height: calc(100vh - 50px);
+  background: url('/photos/room2.jpg');
+  background-size: cover;
+  display: flex;
+}
+
+.roomSelectWrapper div:nth-child(1) {
+  /* margin: 50px 50px auto auto; */
+  margin: auto;
+  padding: 40px 0;
+  min-height: 30vh;
+  width: 35vw;
+  min-width: 300px;
+  text-align: center;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, .7);
+  display: flex;
+  flex-direction: column;
+}
+
+.roomSelectForm {
+  margin: auto;
+}
+
+.roomSelectForm input {
+  height: 25px;
+  width: 60%;
+  margin: 5px auto auto auto;
+}
+
+.roomSelectForm a {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 7px;
+  background-color: black;
+  color: white;
+}
+
+
+.roomSelectForm a:hover {
+  text-decoration: underline;
+}
+
+.roomSelectForm div {
+  /* margin: 10px auto; */
+}
+
+/* ========================================================================== */
+    /* CHAT */
+/* ========================================================================== */
+
 .chatWrapper {
   display: flex;
   flex-direction: row;
+  height: calc(100vh - 50px)
 }
 
 /* ========================================================================== */
@@ -59,45 +219,53 @@ nav {
 .videoWrapper {
   display: flex;
   flex-direction: column;
-  /* margin: 0 0 auto auto; */
+  margin: 0 0 0 0;
   text-align: center;
-  width: 40%;
+  /* width: 40%; */
 }
 
 #remoteVideos {
-  display: flex;
-  flex-direction: column;
-  margin: 0 0 auto auto;
+  /* display: flex; */
+  /* flex-direction: column; */
+  width: 35vw;
+  /* height: auto */
+  /* margin: 0 auto 20px auto; */
   /* top: 0; */
 }
 
 #remoteVideos video {
-  width: 30vw;
-  height: auto;
+  width: 100%;
+  /* max-width: 375px; */
+  /* height: auto; */
+  /* border: 1px solid black; */
 }
 
 #localVideo {
-  width: 30vw;
-  height: auto;
-  margin: 0 0 auto auto;
+  width: 35vw;
+  /* max-width: 375px; */
+  /* height: auto; */
+  /* margin: 0 0 auto auto; */
+  /* border: 1px solid black; */
+  /* margin: 0 auto 20px auto; */
 }
 
 .local {
-  position: absolute;  right: 10px;
+  /* position: absolute; */
+  /* right: 10px; */
 }
 
 .local video {
-  max-width: 200px;
+  /* max-width: 200px; */
 }
-
+/*
 video:nth-of-type(2) {
   position: fixed; right: 0; bottom: 0;
   min-width: 100%; min-height: 100%;
   width: auto; height: auto; z-index: -100;
   background-size: cover;
-}
+} */
 
-.videoBtnWrapper {
+/* .videoBtnWrapper {
   display: flex;
   flex-direction: row;
   margin: 10px 10px auto auto;
@@ -107,7 +275,7 @@ video:nth-of-type(2) {
   margin: 5px;
   width: 50px;
   height: 30px;
-}
+} */
 
 /* ========================================================================== */
     /* WHITEBOARD */
@@ -127,7 +295,7 @@ video:nth-of-type(2) {
   background-color: #f5163e;
 }
 .green {
-  background-color: #72f29f;
+  background-color: #4CAF50;
 }
 .orange {
   background-color: #fa8f23;
@@ -137,21 +305,25 @@ video:nth-of-type(2) {
 }
 
 .whiteBoardWrapper {
-  width: 60%;
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  min-width: 60vw;
   height: 100%;
   border: 1px solid black;
 }
 
-
 canvas {
     /* position: absolute; */
     /* top: 0; left: 0; */
-    /* width: 100%; height: 100%; */
-    border: 1px solid black;
+    width: 100%;
+    height: 100%;
+    /* border: 1px solid red; */
+    background-color: white;
 }
 
 .color-selector {
-    position: fixed;
+    /* position: fixed; */
     /* bottom: 20px; */
     /* left: 20px; */
     margin: auto auto auto 20px;

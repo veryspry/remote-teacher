@@ -19,18 +19,18 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
-        <Route exact path="/" component={RoomChooser} />
-        <Route path="/rooms/:roomName" component={Chat} />
-        // <Route path="/login" component={Login} />
-        // <Route path="/signup" component={Signup} />
+        <Route path="/login" component={Login} />
+        <Route path="/signup" component={Signup} />
         {isLoggedIn && (
           <Switch>
+            <Route exact path="/joinroom" component={RoomChooser} />
+            <Route path="/rooms/:roomName" component={Chat} />
             {/* Routes placed here are only available after logging in */}
-            // <Route path="/home" component={UserHome} />
+            <Route path="/home" component={UserHome} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}
-        // <Route component={Login} />
+        <Route component={Login} />
       </Switch>
     )
   }

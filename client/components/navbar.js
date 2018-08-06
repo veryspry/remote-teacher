@@ -3,12 +3,14 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
+import { NavLink } from 'react-router-dom'
 
 const Navbar = ({handleClick, isLoggedIn}) => (
   <div>
     <div className="navWrapper">
       <nav>
-        <h1>Remote Lessons</h1>
+
+        <NavLink to="/joinroom" className=""><h1>Remote Lessons</h1></NavLink>
         <div className="navLogin">
           {isLoggedIn ? (
             <div>
@@ -29,7 +31,7 @@ const Navbar = ({handleClick, isLoggedIn}) => (
 
       </nav>
     </div>
-    <hr />
+    {/* <hr /> */}
   </div>
 )
 

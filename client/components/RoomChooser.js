@@ -24,14 +24,19 @@ class RoomChooser extends React.Component {
   render() {
 
     return (
-      <div className="roomSelectForm">
-        <form onSubmit={this.handleSubmit} onChange={this.handleChange}>
-          <input type="text" name="roomName" value={this.state.roomName}></input>
-          <div>
-
-            <NavLink to={`/rooms/${this.state.roomName}`} className="">Join Room</NavLink>
-          </div>
-        </form>
+      <div className="roomSelectWrapper">
+        <div>
+          <form onSubmit={this.handleSubmit} onChange={this.handleChange} className="roomSelectForm">
+            {/* <div> */}
+              <h2>Welcome!</h2>
+              <h4>Which room would like to join?</h4>
+            {/* </div> */}
+            <input type="text" name="roomName" value={this.state.roomName} />
+            <div>
+              <NavLink to={`/rooms/${this.state.roomName}`} className="">Join Room</NavLink>
+            </div>
+          </form>
+        </div>
       </div>
     )
   }

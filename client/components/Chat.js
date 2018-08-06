@@ -45,12 +45,12 @@ class Chat extends React.Component {
         <WhiteBoard />
         {/* <SpotifyPlayer /> */}
         <div className="videoWrapper">
-          <div id="remoteVideos" ></div>
-          <video id="localVideo" autoPlay playsInline></video>
-          <div className="videoBtnWrapper">
-            <button onClick={this.call} className="videoBtn">Call</button>
-            <button onClick={this.hangUp} className="videoBtn">Hang Up</button>
-          </div>
+          <div id="remoteVideos"  />
+          <video id="localVideo" autoPlay playsInline />
+          {/* <div className="videoBtnWrapper"> */}
+            {/* <button onClick={this.call} className="videoBtn">Call</button> */}
+            {/* <button onClick={this.hangUp} className="videoBtn">Hang Up</button> */}
+          {/* </div> */}
         </div>
       </div>
     )
